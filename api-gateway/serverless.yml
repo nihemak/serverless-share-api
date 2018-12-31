@@ -27,6 +27,14 @@ resources:
         RestApiId:
           Ref: ApiGatewayRestApi
         Type: TOKEN
+    ApiGatewayAuthorizerPermission:
+      Type: AWS::Lambda::Permission
+      Properties:
+        FunctionName:
+          Fn::GetAtt: AuthorizerLambdaFunction.Arn
+        Action: lambda:InvokeFunction
+        Principal:
+          Fn::Join: ["",["apigateway.", { Ref: "AWS::URLSuffix"}]]
 
 provider:
   name: aws
