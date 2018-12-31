@@ -10,6 +10,23 @@ resources:
       Type: AWS::ApiGateway::RestApi
       Properties:
         Name: MainApiGateway
+    ApiGatewayAuthorizer:
+      Type: AWS::ApiGateway::Authorizer
+      Properties:
+        AuthorizerUri:
+          Fn::Join:
+            - ''
+            - 
+              - 'arn:aws:apigateway:'
+              - Ref: "AWS::Region"
+              - ':lambda:path/2015-03-31/functions/'
+              - Fn::GetAtt: "AuthorizerLambdaFunction.Arn"
+              - "/invocations"
+        IdentitySource: method.request.header.Authorization
+        Name: api-${opt:stage}-authorizer
+        RestApiId:
+          Ref: MainApiGateway
+        Type: TOKEN
 
 provider:
   name: aws
@@ -29,4 +46,5 @@ functions:
       - http:
           method: get
           path: hello
-          authorizer: authorizer
+          authorizer:
+            Ref: ApiGatewayAuthorizer
