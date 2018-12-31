@@ -1,13 +1,12 @@
 {
-  "name": "aws-nodejs-typescript",
-  "version": "1.0.0",
-  "description": "Serverless webpack example using Typescript",
+  "name": "serverless-share-api-apigw",
+  "version": "0.0.0",
+  "description": "serverless share api",
   "main": "handler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/aws-lambda": "8.10.1",
     "@types/node": "^8.0.57",
@@ -17,7 +16,10 @@
     "typescript": "^2.9.2",
     "webpack": "^4.5.0"
   },
-  "author":
-    "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
-  "license": "MIT"
+  "author": "Makoto Nihei <nihemak@gmail.com> (https://github.com/nihemak)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nihemak/serverless-share-api.git"
+  }
 }
