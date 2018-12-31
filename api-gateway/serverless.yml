@@ -22,10 +22,10 @@ provider:
     name: ${env:DEPLOY_BUCKET}
   apiGateway:
     restApiId:
-      Ref: MainApiGateway
+      Ref: ApiGateway
     restApiResources:
       Fn::GetAtt:
-        - MainApiGateway
+        - ApiGateway
         - RootResourceId
 
 functions:
