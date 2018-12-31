@@ -23,7 +23,7 @@ resources:
               - Fn::GetAtt: "AuthorizerLambdaFunction.Arn"
               - "/invocations"
         IdentitySource: method.request.header.Authorization
-        Name: api-${opt:stage}-authorizer
+        Name: api-${env:STAGE_ENV}-authorizer
         RestApiId:
           Ref: MainApiGateway
         Type: TOKEN
