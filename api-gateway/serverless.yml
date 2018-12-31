@@ -1,7 +1,6 @@
 service:
   name: ${env:SERVICE_NAME}-apigw
 
-# Add the serverless-webpack plugin
 plugins:
   - serverless-webpack
 
@@ -20,13 +19,6 @@ provider:
   role: ${env:LAMBDA_ROLE}
   deploymentBucket:
     name: ${env:DEPLOY_BUCKET}
-  #apiGateway:
-  #  restApiId:
-  #    Ref: ApiGatewayRestApi
-  #  restApiResources:
-  #    Fn::GetAtt:
-  #      - ApiGatewayRestApi
-  #      - RootResourceId
 
 functions:
   hello:
