@@ -25,7 +25,7 @@ resources:
         IdentitySource: method.request.header.Authorization
         Name: api-${env:STAGE_ENV}-authorizer
         RestApiId:
-          Ref: MainApiGateway
+          Ref: ApiGatewayRestApi
         Type: TOKEN
 
 provider:
