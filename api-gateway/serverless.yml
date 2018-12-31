@@ -47,4 +47,6 @@ functions:
           method: get
           path: hello
           authorizer:
-            Ref: ApiGatewayAuthorizer
+            type: CUSTOM
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
