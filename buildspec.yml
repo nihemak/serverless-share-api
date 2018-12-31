@@ -3,10 +3,10 @@ phases:
   install:
     commands:
       - npm install -g serverless@1.35.1
-      - npm install
   build:
     commands:
       - cd ./api-gateway
+      - npm install
       - serverless deploy
   post_build:
     commands:
