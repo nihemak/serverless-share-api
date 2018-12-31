@@ -7,7 +7,7 @@ plugins:
 
 resources:
   Resources:
-    ApiGateway:
+    ApiGatewayRestApi:
       Type: AWS::ApiGateway::RestApi
       Properties:
         Name: MainApiGateway
@@ -20,13 +20,13 @@ provider:
   role: ${env:LAMBDA_ROLE}
   deploymentBucket:
     name: ${env:DEPLOY_BUCKET}
-  apiGateway:
-    restApiId:
-      Ref: ApiGateway
-    restApiResources:
-      Fn::GetAtt:
-        - ApiGateway
-        - RootResourceId
+  #apiGateway:
+  #  restApiId:
+  #    Ref: ApiGatewayRestApi
+  #  restApiResources:
+  #    Fn::GetAtt:
+  #      - ApiGatewayRestApi
+  #      - RootResourceId
 
 functions:
   hello:
