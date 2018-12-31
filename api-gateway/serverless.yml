@@ -21,9 +21,12 @@ provider:
     name: ${env:DEPLOY_BUCKET}
 
 functions:
+  authorizer:
+    handler: handler.authorize
   hello:
     handler: handler.hello
     events:
       - http:
           method: get
           path: hello
+          authorizer: authorizer
