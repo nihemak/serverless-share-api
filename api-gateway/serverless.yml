@@ -1,0 +1,60 @@
+service:
+  name: ${env:SERVICE_NAME}-apigw
+
+plugins:
+  - serverless-webpack
+
+resources:
+  Resources:
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: MainApiGateway
+    ApiGatewayAuthorizer:
+      Type: AWS::ApiGateway::Authorizer
+      Properties:
+        AuthorizerUri:
+          Fn::Join:
+            - ''
+            - 
+              - 'arn:aws:apigateway:'
+              - Ref: "AWS::Region"
+              - ':lambda:path/2015-03-31/functions/'
+              - Fn::GetAtt: "AuthorizerLambdaFunction.Arn"
+              - "/invocations"
+        IdentitySource: method.request.header.Authorization
+        Name: api-${env:STAGE_ENV}-authorizer
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        Type: TOKEN
+    ApiGatewayAuthorizerPermission:
+      Type: AWS::Lambda::Permission
+      Properties:
+        FunctionName:
+          Fn::GetAtt: AuthorizerLambdaFunction.Arn
+        Action: lambda:InvokeFunction
+        Principal:
+          Fn::Join: ["",["apigateway.", { Ref: "AWS::URLSuffix"}]]
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: ap-northeast-1
+  stage: ${env:STAGE_ENV}
+  role: ${env:LAMBDA_ROLE}
+  deploymentBucket:
+    name: ${env:DEPLOY_BUCKET}
+
+functions:
+  authorizer:
+    handler: handler.authorize
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          method: get
+          path: hello
+          authorizer:
+            type: CUSTOM
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
