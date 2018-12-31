@@ -5,6 +5,13 @@ service:
 plugins:
   - serverless-webpack
 
+resources:
+  Resources:
+    ApiGateway:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: MainApiGateway
+
 provider:
   name: aws
   runtime: nodejs8.10
@@ -13,6 +20,13 @@ provider:
   role: ${env:LAMBDA_ROLE}
   deploymentBucket:
     name: ${env:DEPLOY_BUCKET}
+  apiGateway:
+    restApiId:
+      Ref: MainApiGateway
+    restApiResources:
+      Fn::GetAtt:
+        - MainApiGateway
+        - RootResourceId
 
 functions:
   hello:
