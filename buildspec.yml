@@ -8,6 +8,9 @@ phases:
       - cd ./api-gateway
       - npm install
       - serverless deploy
+      - cd ../service-hello
+      - npm install
+      - serverless deploy
   post_build:
     commands:
       - touch dummy.zip
