@@ -31,13 +31,3 @@ export function authorize(event: any, context: any, cb: any) {
     cb("Unauthorized");
   }
 }
-
-export const hello: APIGatewayProxyHandler = async (event, context) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Go Serverless Webpack (Typescript) v1.0! Your function executed successfully!',
-      input: event,
-    }),
-  };
-}
