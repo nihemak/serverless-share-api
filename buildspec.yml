@@ -17,6 +17,9 @@ phases:
       - cd ../service-hello
       - npm install
       - serverless deploy
+      - cd ../service-goodbye
+      - npm install
+      - serverless deploy
   post_build:
     commands:
       - touch dummy.zip
