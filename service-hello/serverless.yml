@@ -12,6 +12,9 @@ provider:
   role: ${env:LAMBDA_ROLE}
   deploymentBucket:
     name: ${env:DEPLOY_BUCKET}
+  apiGateway:
+    restApiId: ${env:REST_API_ID}
+    restApiRootResourceId: ${env:REST_API_ROOT_RESOURCE_ID}
 
 functions:
   hello:
@@ -20,3 +23,6 @@ functions:
       - http:
           method: get
           path: hello
+          authorizer:
+            type: CUSTOM
+            authorizerId: ${env:AUTHORIZER_ID}

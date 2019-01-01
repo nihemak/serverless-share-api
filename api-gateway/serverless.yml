@@ -48,13 +48,3 @@ provider:
 functions:
   authorizer:
     handler: handler.authorize
-  hello:
-    handler: handler.hello
-    events:
-      - http:
-          method: get
-          path: hello
-          authorizer:
-            type: CUSTOM
-            authorizerId:
-              Ref: ApiGatewayAuthorizer

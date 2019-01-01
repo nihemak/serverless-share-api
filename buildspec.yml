@@ -2,12 +2,18 @@ version: 0.2
 phases:
   install:
     commands:
+      - curl -s -qL -o /usr/bin/jq https://stedolan.github.io/jq/download/linux64/jq
+      - chmod +x /usr/bin/jq
       - npm install -g serverless@1.35.1
   build:
     commands:
       - cd ./api-gateway
       - npm install
       - serverless deploy
+      - STACK_NAME="${SERVICE_NAME}-apigw-${STAGE_ENV}"
+      - export REST_API_ID=$(aws cloudformation describe-stack-resources --stack-name ${STACK_NAME} | jq -r '.StackResources[] | select(.ResourceType == "AWS::ApiGateway::RestApi") | .PhysicalResourceId')
+      - export REST_API_ROOT_RESOURCE_ID=$(aws apigateway get-resources --rest-api-id $REST_API_ID | jq -r '.items[] | select(.path == "/") | .id')
+      - export AUTHORIZER_ID=$(aws cloudformation describe-stack-resources --stack-name ${STACK_NAME} | jq -r '.StackResources[] | select(.ResourceType == "AWS::ApiGateway::Authorizer") | .PhysicalResourceId')
       - cd ../service-hello
       - npm install
       - serverless deploy
