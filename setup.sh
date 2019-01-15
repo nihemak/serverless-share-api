@@ -46,7 +46,8 @@ cat <<EOF > Permissions.json
     ]
 }
 EOF
-aws iam create-policy \
+aws iam put-role-policy \
+        --role-name serverless-share-api-execute \
         --policy-name serverless-share-api-execute \
         --policy-document file://Permissions.json
 EXECUTE_ROLE_ARN=$(echo $EXECUTE_ROLE |jq -r ".Role.Arn")
