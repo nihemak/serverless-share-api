@@ -1,5 +1,10 @@
 #!/bin/bash
 
+AWS_IDENTITY=$(aws sts get-caller-identity)
+AWS_ACCOUNT_ID=$(echo ${AWS_IDENTITY} | jq -r ".Account")
+
+SERVICE_NAME="serverless-share-api"
+
 # codecommit
 aws codecommit create-repository --repository-name serverless-share-api
 git clone --mirror https://github.com/nihemak/serverless-share-api.git serverless-share-api
@@ -34,14 +39,15 @@ cat <<EOF > Permissions.json
                 "logs:PutLogEvents"
             ],
             "Resource": [
-                "arn:aws:logs:ap-northeast-1:${aws_account_id}:log-group:/aws/lambda/${cloudformation_api_stack}-*"
+                "arn:aws:logs:ap-northeast-1:${AWS_ACCOUNT_ID}:log-group:/aws/lambda/${SERVICE_NAME}-*"
             ],
             "Effect": "Allow"
         }
     ]
 }
 EOF
-aws iam create-policy \
+aws iam put-role-policy \
+        --role-name serverless-share-api-execute \
         --policy-name serverless-share-api-execute \
         --policy-document file://Permissions.json
 EXECUTE_ROLE_ARN=$(echo $EXECUTE_ROLE |jq -r ".Role.Arn")
@@ -96,7 +102,7 @@ cat <<EOF > Environment.json
     },
     {
       "name": "SERVICE_NAME",
-      "value": "serverless-share-api",
+      "value": "${SERVICE_NAME}",
       "type": "PLAINTEXT"
     },
     {
