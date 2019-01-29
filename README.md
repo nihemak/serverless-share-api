@@ -8,7 +8,8 @@ It can avoid the limit of 200 resources of CloudFormation Stack.
 ├── buildspec.yml   ... For CodeBuild. Do serverless deploy.
 ├── api-gateway     ... API Gateway stack. Share API Gateway and Custom Authorizer.
 ├── service-hello   ... Lambda stack. Use API Gateway and Custom Authorizer.
-└── service-goodbye ... Lambda stack. Use API Gateway and Custom Authorizer.
+├── service-goodbye ... Lambda stack. Use API Gateway and Custom Authorizer.
+└── common          ... Common functions.
 ```
 
 Build a confirmation environment.
